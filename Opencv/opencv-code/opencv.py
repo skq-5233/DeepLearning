@@ -95,6 +95,26 @@
 # out.release()
 # cv2.destroyAllWindows()
 
+# # 播放视频；
+# import cv2
+# cv =cv2.VideoCapture("Fall.mp4")
+# # 检查视频是否正确打开；
+# if cv.isOpened():
+#     open,frame = cv.read()
+# else:
+#     open = False
+# while open:
+#     ret,frame = cv.read()
+#     if frame is None:
+#         break
+#     if ret == True:
+#         gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+#         cv2.imshow("result",gray)
+#         if cv2.waitKey(10) &0xFF == 27:
+#             break
+# cv.release()
+# cv2.destroyAllWindows()
+
 
 # 004_3 保存视频;
 # import numpy as np
@@ -121,16 +141,15 @@
 
 # 005 OpenCV 中的绘图函数;
 # 005_1 画线；
-
-# import numpy as np
-# import cv2
-# from matplotlib import pyplot as plt
-# # Create a black image
-# img=np.zeros((512,512,3), np.uint8)
-# # print(img)
-# # Draw a diagonal blue line with thickness of 5 px
-# cv2.line(img,(0,0),(511,511),(255,0,0),5)
-# # plt.show()
+import numpy as np
+import cv2
+from matplotlib import pyplot as plt
+# Create a black image
+img=np.zeros((512,512,3), np.uint8)
+# print(img)
+# Draw a diagonal blue line with thickness of 5 px
+cv2.line(img,(0,0),(511,511),(255,0,0),5)
+# plt.show()
 
 # 005_2 画矩形；
 # cv2.rectangle(img,(384,0),(510,128),(0,255,0),3)
@@ -1545,24 +1564,24 @@
 #     plt.show()
 
 # 24.2 多对象的模板匹配(168);
-import cv2
-import numpy as np
-from matplotlib import pyplot as plt
-img_rgb = cv2.imread('D:/software/DL information/Opencv/mario.png')
-img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
-template = cv2.imread('D:/software/DL information/Opencv/mario_coin.png',0)
-w, h = template.shape[::-1]
-res = cv2.matchTemplate(img_gray,template,cv2.TM_CCOEFF_NORMED)
-threshold = 0.8
-# umpy.where(condition[, x, y])
-# Return elements, either from x or y, depending on condition.
-# If only condition is given, return condition.nonzero().
-loc = np.where(res >= threshold)
-for pt in zip(*loc[::-1]):
-    cv2.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0,0,255), 2)
-cv2.imwrite('D:/software/DL information/Opencv/Mario_Template_Result.png',img_rgb)
-cv2.imshow("1",img_rgb)
-cv2.waitKey(0)
+# import cv2
+# import numpy as np
+# from matplotlib import pyplot as plt
+# img_rgb = cv2.imread('D:/software/DL information/Opencv/mario.png')
+# img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
+# template = cv2.imread('D:/software/DL information/Opencv/mario_coin.png',0)
+# w, h = template.shape[::-1]
+# res = cv2.matchTemplate(img_gray,template,cv2.TM_CCOEFF_NORMED)
+# threshold = 0.8
+# # umpy.where(condition[, x, y])
+# # Return elements, either from x or y, depending on condition.
+# # If only condition is given, return condition.nonzero().
+# loc = np.where(res >= threshold)
+# for pt in zip(*loc[::-1]):
+#     cv2.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0,0,255), 2)
+# cv2.imwrite('D:/software/DL information/Opencv/Mario_Template_Result.png',img_rgb)
+# cv2.imshow("1",img_rgb)
+# cv2.waitKey(0)
 
 
 
