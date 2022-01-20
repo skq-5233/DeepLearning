@@ -141,21 +141,36 @@
 
 # 005 OpenCV 中的绘图函数;
 # 005_1 画线；
-import numpy as np
-import cv2
-from matplotlib import pyplot as plt
-# Create a black image
-img=np.zeros((512,512,3), np.uint8)
-# print(img)
-# Draw a diagonal blue line with thickness of 5 px
-cv2.line(img,(0,0),(511,511),(255,0,0),5)
+# import numpy as np
+# import cv2
+# from matplotlib import pyplot as plt
+# # Create a black image
+# img=np.zeros((512,512,3), np.uint8)
+# # print(img)
+# # Draw a diagonal blue line with thickness of 5 px
+# cv2.line(img,(0,0),(511,511),(255,0,0),5)
+# cv2.imshow("img",img)
+# cv2.imwrite("E:\\Deep Learning\\DeepLearning\\Opencv\\Blue_Line.jpg",img)
+# cv2.waitKey(0)
 # plt.show()
 
 # 005_2 画矩形；
+# import numpy as np
+# import cv2
+# img=np.zeros((512,512,3), np.uint8)
 # cv2.rectangle(img,(384,0),(510,128),(0,255,0),3)
+# cv2.imshow("img",img)
+# cv2.imwrite("E:\\Deep Learning\\DeepLearning\\Opencv\\rectangle.jpg",img)
+# cv2.waitKey(0)
 
 # 005_3 画圆；
-# cv2.circle(img,(447,63), 63, (0,0,255), -1)
+import numpy as np
+import cv2
+img=np.zeros((512,512,3), np.uint8)
+cv2.circle(img,(447,63), 63, (0,0,255), -1)
+cv2.imshow("img",img)
+cv2.imwrite("E:\\Deep Learning\\DeepLearning\\Opencv\\circle.jpg",img)
+cv2.waitKey(0)
 
 # 005_4 画椭圆；
 # cv2.ellipse(img,(256,256),(100,50),0,0,180,255,-1)
