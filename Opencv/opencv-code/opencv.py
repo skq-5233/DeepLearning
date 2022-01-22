@@ -204,7 +204,7 @@
 # cv2.imshow("polylines",img)
 # cv2.imwrite("E:\\Deep Learning\\DeepLearning\\Opencv\\polygon.jpg",img)
 # cv2.waitKey(0)
-# 这里 reshape 的第一个参数为-1, 表明这一维的长度是根据后面的维度的计算出来的。
+
 
 # 005_6 在图片上添加文字;
 # 在图像上绘制白色的 OpenCV；
@@ -228,7 +228,7 @@
 # cv2.imshow(winname, img)
 # cv2.waitKey(0)
 # cv2.destroyWindow(winname)
-# cv2.imwrite('E:\\Deep Learning\\DeepLearning\\Opencv\\Opencv.jpg',img)
+# cv2.imwrite('E:\\Deep Learning\\DeepLearning\\Opencv\\OpenCV.jpg',img)
 
 # 005_7 把鼠标当画笔;
 # import cv2
@@ -335,28 +335,28 @@
 # 005_11 获取并修改像素值;
 # import numpy as np
 # import cv2
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png')
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\OpenCV.jpg')
 #
 # px=img[100,100]
-# print (px)
+# print (px) # [0 0 0];
 # blue=img[100,100,0]
-# print (blue)
+# print (blue) # 0;
 
 # 005_12 获取图像属性;
 
 # import numpy as np
 # import cv2
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png')
-# print(img.shape)  # img.shape 可以获取图像的形状;
-# print(img.size)   # img.size 可以返回图像的像素数目(H*W*C);
-# print(img.dtype)  # img.dtype 返回的是图像的数据类型;
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\OpenCV.jpg')
+# print(img.shape)  # (512, 512, 3)--img.shape 可以获取图像的形状;
+# print(img.size)   # 786432--img.size 可以返回图像的像素数目(H*W*C);
+# print(img.dtype)  # uint8--img.dtype 返回的是图像的数据类型;
 
 
 # 005_13 图像 ROI;
 
 # import numpy as np
 # import cv2
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png')
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\OpenCV.jpg')
 # ball=img[280:340,330:390]
 # img[273:333,100:160]=ball
 
@@ -364,23 +364,22 @@
 
 # import numpy as np
 # import cv2
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png')
-
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\OpenCV.jpg')
+#
 # b,g,r=cv2.split(img)
-# img=cv2.merge(b,g,r)
-
+# img=cv2.merge(b,g)
+#
 # b=img[:,:,0]
-
 # img[:,:,2]=0
-
+# print(img)
 
 # 005_15 为图像扩边（填充）;
-# cv2.copyMakeBorder()
 # import cv2
 # import numpy as np
 # from matplotlib import pyplot as plt
 # BLUE=[255,0,0]
-# img1=cv2.imread('D:/skq/DL/DL informaton/Opencv/VR.jpg')
+# img1=cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\yanyan.jpg')
+#
 # replicate = cv2.copyMakeBorder(img1,10,10,10,10,cv2.BORDER_REPLICATE)
 # reflect = cv2.copyMakeBorder(img1,10,10,10,10,cv2.BORDER_REFLECT)
 # reflect101 = cv2.copyMakeBorder(img1,10,10,10,10,cv2.BORDER_REFLECT_101)
@@ -392,17 +391,19 @@
 # plt.subplot(234),plt.imshow(reflect101,'gray'),plt.title('REFLECT_101')
 # plt.subplot(235),plt.imshow(wrap,'gray'),plt.title('WRAP')
 # plt.subplot(236),plt.imshow(constant,'gray'),plt.title('CONSTANT')
+
+# plt.savefig('E:\\Deep Learning\\DeepLearning\\Opencv\\yanyan_splicing.jpg')
 # plt.show()
 
-## 如何保存多幅拼接图像；
-# cv2.imwrite('D:/skq/DL/DL informaton/Opencv/VR005_15_img.png',all)
+# 如何保存多幅拼接图像；
 
-# cv2.imwrite('D:/skq/DL/DL informaton/Opencv/VR005_15_img1.png',img1)
-# cv2.imwrite('D:/skq/DL/DL informaton/Opencv/VR005_15_replicate.png',replicate)
-# cv2.imwrite('D:/skq/DL/DL informaton/Opencv/VR005_15_reflect.png',reflect)
-# cv2.imwrite('D:/skq/DL/DL informaton/Opencv/VR005_15_reflect101.png',reflect101)
-# cv2.imwrite('D:/skq/DL/DL informaton/Opencv/VR005_15_wrap.png',wrap)
-# cv2.imwrite('D:/skq/DL/DL informaton/Opencv/VR005_15_constant.png',constant)
+# cv2.imwrite('E:\\Deep Learning\\DeepLearning\\Opencv\\yanyan.png',all)
+# cv2.imwrite('E:\\Deep Learning\\DeepLearning\\Opencv\\yanyan_img1.png',img1)
+# cv2.imwrite('E:\\Deep Learning\\DeepLearning\\Opencv\\yanyan_replicate.png',replicate)
+# cv2.imwrite('E:\\Deep Learning\\DeepLearning\\Opencv\\yanyan_reflect.png',reflect)
+# cv2.imwrite('E:\\Deep Learning\\DeepLearning\\Opencv\\yanyan_reflect101.png',reflect101)
+# cv2.imwrite('E:\\Deep Learning\\DeepLearning\\Opencv\\yanyan_wrap.png',wrap)
+# cv2.imwrite('E:\\Deep Learning\\DeepLearning\\Opencv\\yanyan_constant.png',constant)
 
 
 # 10.1 图像上的算术运算;
@@ -414,23 +415,24 @@
 # print(cv2.add(x,y))  # 250+10 = 260 => 255;
 # print(x+y)           # 250+10 = 260 % 256 = 4;
 
-# 10.2 图像混合;
+# 10.2 图像混合--(图像大小需一致)(g (x) = (1 − α) f0 (x) + αf1 (x));
 # import cv2
 # import numpy as np
-#
-# img1=cv2.imread('D:/skq/DL/DL informaton/Opencv/Opencv.png')
-# img2=cv2.imread('D:/skq/DL/DL informaton/Opencv/VR.jpg')
-# dst=cv2.addWeighted(img1,0.7,img2,0.3,0)
+
+# img1=cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\yanyan.jpg')
+# img2=cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\VR002.png')
+# dst= cv2.addWeighted(img1, 0.6, img2, 0.4, 0)
 # cv2.imshow('dst',dst)
+# cv2.imwrite('E:\\Deep Learning\\DeepLearning\\Opencv\\yy.jpg',dst)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
 # 10.3 按位运算;
 # import cv2
 # import numpy as np
-# # 加载图像
-# img1=cv2.imread('D:/skq/DL/DL informaton/Opencv/Opencv.png')
-# img2=cv2.imread('D:/skq/DL/DL informaton/Opencv/VR.jpg') # I want to put logo on top-left corner, So I create a ROI
+# 加载图像
+# img1=cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\yanyan.jpg')
+# img2=cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\me.jpg') # I want to put logo on top-left corner, So I create a ROI
 # rows,cols,channels = img2.shape
 # roi = img1[0:rows, 0:cols ]
 # # Now create a mask of logo and create its inverse mask also
@@ -447,7 +449,7 @@
 # dst = cv2.add(img1_bg,img2_fg)
 # img1[0:rows, 0:cols ] = dst
 # cv2.imshow('res',img1)
-# cv2.imwrite('D:/skq/DL/DL informaton/Opencv/VR10_3_img.png',img1)
+# cv2.imwrite('E:\\Deep Learning\\DeepLearning\\Opencv\\logo.png',img1)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
