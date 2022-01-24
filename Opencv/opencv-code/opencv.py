@@ -466,7 +466,7 @@
 
 # import cv2
 # import numpy as np
-# img1 = cv2.imread('D:/skq/DL/DL informaton/Opencv/Opencv.png')
+# img1 = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\Opencv.jpg')
 # e1 = cv2.getTickCount()
 # for i in range(5,49,2):
 #     img1 = cv2.medianBlur(img1,i)
@@ -537,13 +537,13 @@
 # modules/imgproc/src/color.cpp:3541:
 # error: (-215) (scn == 3 || scn == 4) && (depth == CV_8U || depth == CV_32F)
 # in function cvtColor
-# #scn (the number of channels of the source),
-# #i.e. self.img.channels(), is neither 3 nor 4.
-# #
-# #depth (of the source),
-# #i.e. self.img.depth(), is neither CV_8U nor CV_32F.
-# # 所以不能用 [0,255,0]，而要用 [[[0,255,0]]]
-# # 这里的三层括号应该分别对应于 cvArray， cvMat， IplImage
+# scn (the number of channels of the source),
+# i.e. self.img.channels(), is neither 3 nor 4.
+#
+# depth (of the source),
+# i.e. self.img.depth(), is neither CV_8U nor CV_32F.
+# 所以不能用 [0,255,0]，而要用 [[[0,255,0]]]
+# 这里的三层括号应该分别对应于 cvArray， cvMat， IplImage
 # green=np.uint8([[[0,255,0]]])
 # hsv_green=cv2.cvtColor(green,cv2.COLOR_BGR2HSV)
 # print (hsv_green)
@@ -557,7 +557,7 @@
 # 默认情况下所有改变图像尺寸大小的操作使用的插值方法都是 cv2.INTER_LINEAR
 # import numpy as np
 # import cv2
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png')
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\Opencv.jpg')
 # # 下面的 None 本应该是输出图像的尺寸，但是因为后边我们设置了缩放因子,因此这里为 None;
 # res=cv2.resize(img,None,fx=2,fy=2,interpolation=cv2.INTER_CUBIC)
 # # OR,这里呢，我们直接设置输出图像的尺寸，所以不用设置缩放因子;
@@ -575,8 +575,9 @@
 # -*- coding: utf-8 -*-
 # import cv2
 # import numpy as np
-# cap=cv2.VideoCapture(0)
-# while(1):
+#
+# cap = cv2.VideoCapture(0)
+# while (1):
 #     # 获取每一帧
 #     ret, frame = cap.read()
 #     # 转换到 HSV
@@ -603,7 +604,7 @@
 # -*- coding: utf-8 -*-
 # import cv2
 # import numpy as np
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png')
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\Opencv.jpg')
 # rows,cols=img.shape
 # # 这里的第一个参数为旋转中心，第二个为旋转角度，第三个为旋转后的缩放因子
 # # 可以通过设置旋转中心，缩放因子，以及窗口大小来防止旋转后超出边界的问题
@@ -830,10 +831,10 @@
 # 函数 cv2.bilateralFilter() 能在保持边界清晰的情况下有效的去除噪音。
 # 双边滤波会确保边界不会被模糊掉，因为边界处的灰度值变化比较大;
 
-#cv2.bilateralFilter(src, d, sigmaColor, sigmaSpace)
-#d – Diameter of each pixel neighborhood that is used during filtering.
+# cv2.bilateralFilter(src, d, sigmaColor, sigmaSpace)
+# d – Diameter of each pixel neighborhood that is used during filtering.
 # If it is non-positive, it is computed from sigmaSpace
-#9 邻域直径，两个 75 分别是空间高斯函数标准差，灰度值相似性高斯函数标准差
+# 9 邻域直径，两个 75 分别是空间高斯函数标准差，灰度值相似性高斯函数标准差
 
 # import cv2
 # from matplotlib import pyplot as plt
@@ -1204,7 +1205,6 @@
 # plt.show()
 
 
-
 # 22.2 直方图均衡化 (p140)
 # numpy直方图均衡化；
 
@@ -1221,7 +1221,6 @@
 # plt.hist(img.flatten(),256,[0,256], color = 'r')
 # plt.xlim([0,256])
 # plt.legend(('cdf','histogram'), loc = 'best')
-
 
 
 # 构建 Numpy 掩模数组， cdf 为原数组，当数组元素为 0 时，掩盖（计算时被忽略）。
@@ -1633,14 +1632,3 @@
 # cv2.imwrite('D:/software/DL information/Opencv/Mario_Template_Result.png',img_rgb)
 # cv2.imshow("1",img_rgb)
 # cv2.waitKey(0)
-
-
-
-
-
-
-
-
-
-
-
