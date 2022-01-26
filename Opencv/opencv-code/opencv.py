@@ -621,42 +621,63 @@
 
 # 14.4 仿射变换
 # 为了创建这个矩阵我们需要从原图像中找到三个点以及他们在输出图像中的位置。然后cv2.getAffineTransform 会创建一个 2x3 的矩阵，最后这个矩阵会被传给函数 cv2.warpAffine;
-import cv2
-import numpy as np
-from matplotlib import pyplot as plt
-img = cv2.imread('D:\\DL information\\Opencv\\VR.jpg')
-rows,cols,ch=img.shape
-pts1=np.float32([[50,50],[200,50],[50,200]])
-pts2=np.float32([[10,100],[200,50],[100,250]])
-M=cv2.getAffineTransform(pts1,pts2)
-dst=cv2.warpAffine(img,M,(cols,rows))
-plt.subplot(121,plt.imshow(img),plt.title('Input'))
-plt.subplot(121,plt.imshow(img),plt.title('Output'))
-plt.show()
+
+# import cv2 as cv
+# import numpy as np
+# import matplotlib.pyplot as plt
+#
+# img = cv.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\Opencv.jpg')
+# rows, cols = img.shape[:2]
+#
+# # 变换前的三个点
+# pts1 = np.float32([[50, 65], [150, 65], [210, 210]])
+# # 变换后的三个点
+# pts2 = np.float32([[50, 100], [150, 65], [100, 250]])
+#
+# # 生成变换矩阵
+# M = cv.getAffineTransform(pts1, pts2)
+# # 第三个参数为dst的大小
+# dst = cv.warpAffine(img, M, (cols, rows))
+#
+# plt.subplot(121), plt.imshow(img), plt.title('input')
+# plt.subplot(122), plt.imshow(dst), plt.title('output')
+# # plt.show() # 注释前，保存白底图像，无内容；
+# plt.savefig('E:\\Deep Learning\\DeepLearning\\Opencv\\VR_warpAffine.jpg')
+
 
 # 14.5 透视变换
 # 对于视角变换，我们需要一个 3x3 变换矩阵。在变换前后直线还是直线。
 # 要构建这个变换矩阵，你需要在输入图像上找 4 个点，以及他们在输出图
 # 像上对应的位置。这四个点中的任意三个都不能共线。这个变换矩阵可以由
 # 函数 cv2.getPerspectiveTransform() 构建。然后把这个矩阵传给函数cv2.warpPerspective;
-# import cv2
+
 # import numpy as np
-# from matplotlib import pyplot as plt
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png')
-# rows,cols,ch=img.shape
-# pts1 = np.float32([[56,65],[368,52],[28,387],[389,390]])
-# pts2 = np.float32([[0,0],[300,0],[0,300],[300,300]])
-# M=cv2.getPerspectiveTransform(pts1,pts2)
-# dst=cv2.warpPerspective(img,M,(300,300))
-# plt.subplot(121,plt.imshow(img),plt.title('Input'))
-# plt.subplot(121,plt.imshow(img),plt.title('Output'))
-# plt.show()
+# import cv2 as cv
+# import matplotlib.pyplot as plt
+# img = cv.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\Opencv.jpg') # 'D:\\DL information\\Opencv\\VR.jpg'
+#
+# # 原图中卡片的四个角点
+# pts1 = np.float32([[148, 80], [437, 114], [94, 247], [423, 288]])
+# # 变换后分别在左上、右上、左下、右下四个点
+# pts2 = np.float32([[0, 0], [320, 0], [0, 178], [320, 178]])
+#
+# # 生成透视变换矩阵
+# M = cv.getPerspectiveTransform(pts1, pts2)
+# # 进行透视变换，参数3是目标图像大小
+# dst = cv.warpPerspective(img, M, (320, 178))
+#
+# plt.subplot(121), plt.imshow(img[:, :, ::-1]), plt.title('input')
+# plt.subplot(122), plt.imshow(dst[:, :, ::-1]), plt.title('output')
+# # # plt.show() # 注释前，保存白底图像，无内容；
+# plt.savefig('E:\\Deep Learning\\DeepLearning\\Opencv\\VR_warpPerspective.jpg') # 'D:\\DL information\\Opencv\\VR_warpPerspective.jpg'
+
+
 
 # 15 图像阈值
 # import cv2
 # import numpy as np
 # from matplotlib import pyplot as plt
-# img=cv2.imread('gradient.png',0)
+# img=cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\Opencv.jpg',0)
 # ret,thresh1=cv2.threshold(img,127,255,cv2.THRESH_BINARY)
 # ret,thresh2=cv2.threshold(img,127,255,cv2.THRESH_BINARY_INV)
 # ret,thresh3=cv2.threshold(img,127,255,cv2.THRESH_TRUNC)
@@ -668,7 +689,8 @@ plt.show()
 #     plt.subplot(2, 3, i + 1), plt.imshow(images[i], 'gray')
 #     plt.title(titles[i])
 #     plt.xticks([]), plt.yticks([])
-# plt.show()
+# # plt.show()
+# plt.savefig('E:\\Deep Learning\\DeepLearning\\Opencv\\VR_warpPerspective.jpg')
 
 # 15.2 自适应阈值
 # 当同一幅图像上的不同部分的具有不同亮度时。
@@ -683,24 +705,21 @@ plt.show()
 # import cv2
 # import numpy as np
 # from matplotlib import pyplot as plt
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png',0)
+# img = cv2.imread('D:\\DL information\\Opencv\\VR.jpg',0)
 # # 中值滤波
 # img = cv2.medianBlur(img,5)
 # ret,th1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
 # #11 为 Block size, 2 为 C 值
-# th2 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_MEAN_C,\
-# cv2.THRESH_BINARY,11,2)
-# th3 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
-# cv2.THRESH_BINARY,11,2)
-# titles = ['Original Image', 'Global Thresholding (v = 127)',
-# 'Adaptive Mean Thresholding', 'Adaptive Gaussian Thresholding']
+# th2 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_MEAN_C,cv2.THRESH_BINARY,11,2)
+# th3 = cv2.adaptiveThreshold(img,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)
+# titles = ['Original Image', 'Global Thresholding (v = 127)','Adaptive Mean Thresholding', 'Adaptive Gaussian Thresholding']
 # images = [img, th1, th2, th3]
 # for i in range(4):
 #     plt.subplot(2, 2, i + 1), plt.imshow(images[i], 'gray')
 #     plt.title(titles[i])
 #     plt.xticks([]), plt.yticks([])
-# plt.show()
-
+# # plt.show()
+# plt.savefig('D:\\DL information\\Opencv\\VR_AdaptiveThreshold.jpg')
 
 # 15.3 Otsu’s 二值化
 # 这里用到到的函数还是 cv2.threshold()，但是需要多传入一个参数
@@ -712,7 +731,7 @@ plt.show()
 # import cv2
 # import numpy as np
 # from matplotlib import pyplot as plt
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png',0)
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\Opencv.jpg',0)
 # # global thresholding
 # ret1,th1 = cv2.threshold(img,127,255,cv2.THRESH_BINARY)
 # # Otsu's thresholding
@@ -739,12 +758,13 @@ plt.show()
 #     plt.title(titles[i * 3 + 1]), plt.xticks([]), plt.yticks([])
 #     plt.subplot(3, 3, i * 3 + 3), plt.imshow(images[i * 3 + 2], 'gray')
 #     plt.title(titles[i * 3 + 2]), plt.xticks([]), plt.yticks([])
-# plt.show()
+# # plt.show()
+# plt.savefig('E:\\Deep Learning\\DeepLearning\\Opencv\\VR_ Otsu-threshold.jpg')
 
 # 15.4 Otsu’s 二值化是如何工作的？
 # import cv2
 # import numpy as np
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png',0)
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\Opencv.jpg',0)
 # blur = cv2.GaussianBlur(img,(5,5),0)
 # # find normalized_histogram, and its cumulative distribution function
 # # 计算归一化直方图
@@ -769,7 +789,7 @@ plt.show()
 #         thresh = i
 # # find otsu's threshold value with OpenCV function
 # ret, otsu = cv2.threshold(blur,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-# print (thresh,ret)
+# print(thresh,ret)
 
 # 16 图像平滑
 # OpenCV 提供的函数 cv.filter2D() 可以让我们对一幅图像进行卷积操作。
@@ -777,7 +797,7 @@ plt.show()
 # import numpy as np
 # import cv2
 # from matplotlib import pyplot as plt
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png')
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\Opencv.jpg')
 # kernel = np.ones((5,5),np.float32)/25
 # #cv.Filter2D(src, dst, kernel, anchor=(-1, -1))
 # #ddepth –desired depth of the destination image;
@@ -793,7 +813,8 @@ plt.show()
 # plt.xticks([]), plt.yticks([])
 # plt.subplot(122),plt.imshow(dst),plt.title('Averaging')
 # plt.xticks([]), plt.yticks([])
-# plt.show()
+# # plt.show()
+# plt.savefig('E:\\Deep Learning\\DeepLearning\\Opencv\\VR_filter2D.jpg')
 
 # 图像模糊（图像平滑）使用低通滤波器可以达到图像模糊的目的。
 # 16.1 平均
@@ -801,23 +822,24 @@ plt.show()
 # import cv2
 # import numpy as np
 # from matplotlib import pyplot as plt
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png')
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\Opencv.jpg')
 # blur = cv2.blur(img,(5,5))
 # plt.subplot(121),plt.imshow(img),plt.title('Original')
 # plt.xticks([]), plt.yticks([])
 # plt.subplot(122),plt.imshow(blur),plt.title('Blurred')
 # plt.xticks([]), plt.yticks([])
-# plt.show()
+# # plt.show()
+# plt.savefig('E:\\Deep Learning\\DeepLearning\\Opencv\\VR_blur.jpg')
 
 # 16.2 高斯模糊
 # 实现的函数是 cv2.GaussianBlur()。
 # 高斯滤波可以有效的从图像中去除高斯噪音。
 # 0 是指根据窗口大小（ 5,5）来计算高斯函数标准差
-# import cv2
-# from matplotlib import pyplot as plt
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png')
-# blur = cv2.GaussianBlur(img,(5,5),0)
-# plt.show()
+import cv2
+from matplotlib import pyplot as plt
+img = cv2.imread('D:/software/DL information/Opencv/Opencv.png')
+blur = cv2.GaussianBlur(img,(5,5),0)
+plt.show()
 
 # 16.3 中值模糊
 # 是用与卷积框对应像素的中值来替代中心像素的值；
