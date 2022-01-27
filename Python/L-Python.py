@@ -659,34 +659,64 @@
 
 
 # 4.2 创建和使用字典;字典由键及其相应的值组成，这种键值对称为项（item）。
-phonebook = {'Alice': '2341', 'Beth': '9102', 'Cecil': '3258'}
-print(phonebook['Cecil']) # 3258;
+# phonebook = {'Alice': '2341', 'Beth': '9102', 'Cecil': '3258'}
+# print(phonebook['Cecil']) # 3258;
 
+# 4.2.1 函数 dict；
+# items = [('name', 'Gumby'), ('age', 42)]
+# d = dict(items)
+# print(d)  # {'name': 'Gumby', 'age': 42}
+# print(d['age']) # 42
 
+# 还可使用关键字实参来调用这个函数;
+# d = dict(name='Gumby', age=42)
+# print(d)  # {'name': 'Gumby', 'age': 42};
 
+# 4.2.2 基本的字典操作
+#  len(d)返回字典d包含的项（键值对）数。
+#  d[k]返回与键k相关联的值。
+#  d[k] = v将值v关联到键k。
+#  del d[k]删除键为k的项。
+#  k in d检查字典d是否包含键为k的项
+# x = {}
+# x[2] = 'weqe'
+# print(x)  # {2: 'weqe'};
 
+# 字典示例;
+# 一个简单的数据库
+# 一个将人名用作键的字典。每个人都用一个字典表示，
+# 字典包含键'phone'和'addr'，它们分别与电话号码和地址相关联
+# people = {
+#     'Alice': {
+#         'phone': '2341',
+#         'addr': 'Foo drive 23'
+#     },
+#     'Beth': {
+#         'phone': '9102',
+#         'addr': 'Bar street 42'
+#     },
+#     'Cecil': {
+#         'phone': '3158',
+#         'addr': 'Baz avenue 90'
+#     }
+# }
+# # 电话号码和地址的描述性标签，供打印输出时使用
+# labels = {
+#     'phone': 'phone number',
+#     'addr': 'address'
+# }
+# name = input('Name: ')
+# # 要查找电话号码还是地址？
+# request = input('Phone number (p) or address (a)? ')
+# # 使用正确的键：
+# if request == 'p': key = 'phone'
+# if request == 'a': key = 'addr'
+# # 仅当名字是字典包含的键时才打印信息：
+# if name in people: print("{}'s {} is {}.".format(name, labels[key], people[name][key]))
 
+# 4.2.3 将字符串格式设置功能用于字典;使用format_map来指出你将通过一个映射来提供所需的信息
+# phonebook = {'Beth': '9102', 'Alice': '2341', 'Cecil': '3258'}
+# print("Cecil's phone number is {Cecil}.".format_map(phonebook))  # Cecil's phone number is 3258.;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# 4.2.4 字典方法;
+# 1. clear;方法clear删除所有的字典项;
