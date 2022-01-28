@@ -672,7 +672,6 @@
 # plt.savefig('E:\\Deep Learning\\DeepLearning\\Opencv\\VR_warpPerspective.jpg') # 'D:\\DL information\\Opencv\\VR_warpPerspective.jpg'
 
 
-
 # 15 图像阈值
 # import cv2
 # import numpy as np
@@ -1029,19 +1028,29 @@
 # plt.savefig('E:\\Deep Learning\\DeepLearning\\Opencv\\VR-Canny.jpg')
 # plt.show()
 
-# 20 图像金字塔
+# 20 图像金字塔（高斯金字塔用来向下降采样图像；拉普拉斯金字塔: 用来从金字塔低层图像重建上层未采样图像）
 # cv2.pyrDown() 和 cv2.pyrUp() 构建图像金字塔;
-import cv2
-img = cv2.imread('D:/software/DL information/Opencv/VR.jpg')
-lower_reso = cv2.pyrDown(higher_reso)
-# higher_reso2 = cv2.pyrUp(lower_reso)
+# import cv2
+# import matplotlib.pyplot as plt
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\white-noise.jpg',0)
+# lower_reso = cv2.pyrDown(img)
+# higher_reso = cv2.pyrUp(lower_reso)
+#
+# plt.subplot(1,3,1),plt.imshow(img,cmap = 'gray')
+# plt.title('Original'), plt.xticks([]), plt.yticks([])
+# plt.subplot(1,3,2),plt.imshow(lower_reso,cmap = 'gray')
+# plt.title('down'), plt.xticks([]), plt.yticks([])
+# plt.subplot(1,3,3),plt.imshow(higher_reso,cmap = 'gray')
+# plt.title('up'), plt.xticks([]), plt.yticks([])
+# plt.savefig('E:\\Deep Learning\\DeepLearning\\Opencv\\white-noise-pyramid.jpg')
+# plt.show()
 
 
-# 金字塔重建原始图像
+# 使用金字塔（高斯、拉普拉斯）进行图像融合；
 # import cv2
 # import numpy as np,sys
-# A = cv2.imread('D:/software/DL information/Opencv/VR.jpg')
-# B = cv2.imread('D:/software/DL information/Opencv/Opencv.png')
+# A = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\white-noise.jpg',0)
+# B = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\VR.jpg',0)
 # # generate Gaussian pyramid for A
 # G = A.copy()
 # gpA = [G]
@@ -1084,46 +1093,253 @@ lower_reso = cv2.pyrDown(higher_reso)
 # real = np.hstack((A[:,:cols/2],B[:,cols/2:]))
 # cv2.imwrite('Pyramid_blending2.jpg',ls_)
 # cv2.imwrite('Direct_blending.jpg',real)
+#
+# cv2.imshow("white-noise",A)
+# cv2.imshow("VR",B)
+# # cv2.imshow("apple_orange_reconstruct",apple_orange_reconstruct)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
 
-# 21 OpenCV 中的轮廓
 # import numpy as np
-# import cv2
-# im = cv2.imread('D:/software/DL information/Opencv/VR.jpg')
-# imgray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
-# ret,thresh = cv2.threshold(imgray,127,255,0)
-# image, contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-# img = cv2.drawContours(img, contours, -1, (0,255,0), 3)
-# img = cv2.drawContours(img, contours, 3, (0,255,0), 3)
+# import cv2 as cv
+# # laod images
+#
+# # laod images
+#
+# apple = cv.imread(r"E:\\Deep Learning\\DeepLearning\\Opencv\\apple.jpg")
+# orange = cv.imread(r"E:\\Deep Learning\\DeepLearning\\Opencv\\orange.jpg")
+#
+# print(apple.shape) # (695, 756, 3);
+# print(orange.shape) # (695, 756, 3);
+#
+# # print(apple.dtype, orange.dtype # uint8 uint8
+#
+# apple_copy = apple.copy()
+#
+# # Guassian Pyramids for apple
+# apple_guassian = [apple_copy]
+#
+# for i in range(6):
+#     apple_copy = cv.pyrDown(apple_copy)
+#     apple_guassian.append(apple_copy)
+#
+# # Guassian Pyramids for apple
+# orange_copy = orange.copy()
+# orange_gaussian = [orange_copy]
+#
+# for i in range(6):
+#     orange_copy = cv.pyrDown(orange_copy)
+#     orange_gaussian.append(orange_copy)
+#
+# # Laplacian Pyramids for apple
+# apple_copy = apple_guassian[5]
+# apple_laplacian = [apple_copy]
+#
+# for i in range(5, 0, -1):
+#     gaussian_extended = cv.pyrUp(apple_guassian[i])
+#
+#     laplacian = cv.subtract(apple_guassian[i - 1], gaussian_extended) # cv2.error: OpenCV(4.5.1);
+#     apple_laplacian.append(laplacian)
+#
+# # Laplacian Pyramids for orange
+# orange_copy = orange_gaussian[5]
+# orange_laplacian = [orange_copy]
+#
+# for i in range(5, 0, -1):
+#     gaussian_extended = cv.pyrUp(orange_gaussian[i])
+#
+#     laplacian = cv.subtract(orange_gaussian[i - 1], gaussian_extended)
+#     orange_laplacian.append(laplacian)
+#
+# # join the left half of apple and right half of orange in each levels of Laplacian Pyramids
+# apple_orange_pyramid = []
+# n = 0
+# for apple_lp, orange_lp in zip(apple_laplacian, orange_laplacian):
+#     n += 1
+#     cols, rows, ch = apple_lp.shape
+#     laplacian = np.hstack((apple_lp[:, 0:int(cols / 2)], orange_lp[:, int(cols / 2):]))
+#     apple_orange_pyramid.append(laplacian)
+#
+# # reconstrut image
+# apple_orange_reconstruct = apple_orange_pyramid[0]
+# for i in range(1, 6):
+#     apple_orange_reconstruct = cv.pyrUp(apple_orange_reconstruct)
+#     apple_orange_reconstruct = cv.add(apple_orange_pyramid[i], apple_orange_reconstruct)
+#
+# cv.imshow("apple", apple)
+# cv.imshow("orange", orange)
+# cv.imshow("apple_orange_reconstruct", apple_orange_reconstruct)
+# cv.waitKey(0)
+# cv.destroyAllWindows()
 
 
-# 21.2 轮廓特征
+############################################################
+# work(2022-0127)
+
 # import cv2
 # import numpy as np
 # from matplotlib import pyplot as plt
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png',0)
+#
+#
+# def sameSize(img1, img2):
+#     rows, cols, dpt = img2.shape
+#     dst = img1[:rows, :cols]
+#     return dst
+#
+#
+# apple = cv2.imread(r"E:\\Deep Learning\\DeepLearning\\Opencv\\apple.jpg")
+# orange = cv2.imread(r"E:\\Deep Learning\\DeepLearning\\Opencv\\orange.jpg")
+#
+# G = apple.copy()
+# gp_apple = [G]
+# for i in range(6):
+#     G = cv2.pyrDown(G)  # 下采样共6次
+#     gp_apple.append(G)
+#
+# G = orange.copy()
+# gp_orange = [G]
+# for j in range(6):
+#     G = cv2.pyrDown(G)
+#     gp_orange.append(G)
+#
+# lp_apple = [gp_apple[5]]
+# for i in range(5, 0, -1):
+#     GE = cv2.pyrUp(gp_apple[i])  # 上采样6次
+#     L = cv2.subtract(gp_apple[i - 1], sameSize(GE, gp_apple[i - 1]))  # 两个图像相减
+#     lp_apple.append(L)
+#
+# lp_orange = [gp_orange[5]]
+# for i in range(5, 0, -1):
+#     GE = cv2.pyrUp(gp_orange[i])
+#     L = cv2.subtract(gp_orange[i - 1], sameSize(GE, gp_orange[i - 1]))
+#     lp_orange.append(L)
+#
+# LS = []
+# for la, lb in zip(lp_apple, lp_orange):  # 一个数组中取一个元素
+#     rows, cols, dpt = la.shape
+#     ls = np.hstack((la[:, 0:cols // 2], lb[:, cols // 2:]))  # 水平方向上平铺，各取一半
+#     LS.append(ls)
+#
+# ls_reconstruct = LS[0]
+# for i in range(1, 6):
+#     ls_reconstruct = cv2.pyrUp(ls_reconstruct)
+#     ls_reconstruct = cv2.add(sameSize(ls_reconstruct, LS[i]), LS[i])
+#
+# r, c, depth = apple.shape
+# real = np.hstack((apple[:, 0:c // 2], orange[:, c // 2:]))  # apple和orange各取一半。
+#
+# plt.subplot(2,2,1), plt.imshow(cv2.cvtColor(apple, cv2.COLOR_BGR2RGB))
+# plt.title("apple"), plt.xticks([]), plt.yticks([])
+# plt.subplot(2,2,2), plt.imshow(cv2.cvtColor(orange, cv2.COLOR_BGR2RGB))
+# plt.title("orange"), plt.xticks([]), plt.yticks([])
+# plt.subplot(2,2,3), plt.imshow(cv2.cvtColor(real, cv2.COLOR_BGR2RGB))
+# plt.title("real"), plt.xticks([]), plt.yticks([])
+# plt.subplot(2,2,4), plt.imshow(cv2.cvtColor(ls_reconstruct, cv2.COLOR_BGR2RGB))
+# plt.title("laplace_pyramid"), plt.xticks([]), plt.yticks([])
+# plt.savefig("E:\\Deep Learning\\DeepLearning\\Opencv\\fruit-pyramid.jpg")
+# plt.show()
+############################################################
+# work(2022-0127)
+
+
+# 21 OpenCV 中的轮廓
+# import cv2
+# from matplotlib import pyplot as plt
+#
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\white-noise.jpg')
+# gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # BGR-灰度
+# ret, binary = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)  # 二值图像
+# contours, hierarchy = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+# img1 = img.copy()  # 对原始图像进行绘制
+# contour = cv2.drawContours(img1, contours, -1, (0, 127, 127), 4)  # img1为复制图像，轮廓会修改原始图像
+# # cv2.imshow("original", img)
+# # cv2.imshow("contours", contour)
+# # cv2.imwrite('E:\\Deep Learning\\DeepLearning\\Opencv\\white-noise-contour.jpg',contour)
+# # cv2.waitKey()
+#
+# plt.subplot(2, 2, 1), plt.imshow(img, cmap='gray')
+# plt.title('Original Image'), plt.xticks([]), plt.yticks([])
+# plt.subplot(2, 2, 2), plt.imshow(binary, cmap='gray')
+# plt.title('binary Image'), plt.xticks([]), plt.yticks([])
+#
+# plt.subplot(2, 2, 3), plt.imshow(hierarchy, cmap='gray')
+# plt.title('hierarchy Image'), plt.xticks([]), plt.yticks([])
+# plt.subplot(2, 2, 4), plt.imshow(contour, cmap='gray')
+# plt.title('contour Image'), plt.xticks([]), plt.yticks([])
+#
+# plt.savefig('E:\\Deep Learning\\DeepLearning\\Opencv\\white-noise-contour2.jpg')
+# plt.show()
+
+# 21.2 轮廓特征
+# 21.2.1 矩
+# import cv2
+# import numpy as np
+# from matplotlib import pyplot as plt
+#
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\white-noise.jpg',0)
+#
 # ret,thresh = cv2.threshold(img,127,255,0)
 # contours,hierarchy = cv2.findContours(thresh, 1, 2)
 # cnt = contours[0]
 # M = cv2.moments(cnt)
-# print (M)
-# cx = int(M['m10']/M['m00'])
-# cy = int(M['m01']/M['m00'])
+# print(M)
 
-# 轮廓面积
+
+# 21.2.2 轮廓面积
+# -*- coding: cp936 -*-
+# import cv2
+# import numpy as np
+# from matplotlib import pyplot as plt
+#
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\VR.jpg',0)
+#
+# ret,thresh = cv2.threshold(img,127,255,0)
+# contours,hierarchy = cv2.findContours(thresh, 1, 2)
+# cnt = contours[0]
+# M = cv2.moments(cnt)
 # area = cv2.contourArea(cnt)
-# print(area)       # 面积
-# print(M['m00'])   # 面积
 #
-# # 轮廓周长
+# print(area) # 4.0;
+# print(M['m00']) # 4.0;2种方法结果一致。
+
+
+# 21.2.3 轮廓周长
+# import cv2
+# import numpy as np
+# from matplotlib import pyplot as plt
+#
+# img = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\VR.jpg',0)
+#
+# ret,thresh = cv2.threshold(img,127,255,0)
+# contours,hierarchy = cv2.findContours(thresh, 1, 2)
+# cnt = contours[0]
 # perimeter = cv2.arcLength(cnt,True)
-# print(perimeter)
-# # 21.2.4 轮廓近似
-# epsilon = 0.1*cv2.arcLength(cnt,True)
-# approx = cv2.approxPolyDP(cnt,epsilon,True)
-# # print(epsilon)
-# # print(approx)
 #
-# plt.savefig('D:/software/DL information/Opencv/Opencv_lkuo.png')
+# print(perimeter) # 7.656854152679443;
+
+# 21.2.4 轮廓近似
+# -*- coding: utf-8 -*-
+# import numpy as np
+# from matplotlib import pyplot as plt
+# import cv2
+# image = cv2.imread('E:\\Deep Learning\\DeepLearning\\Opencv\\VR.jpg')
+# # cv2.imshow("Image", image)
+# # cv2.waitKey()
+# gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+# thresh = cv2.threshold(gray, 200, 255,cv2.THRESH_BINARY_INV)[1]
+#
+# # cv2.imshow("Thresh", thresh)
+# # cv2.waitKey()
+#
+# plt.subplot(1, 3, 1), plt.imshow(image, cmap='gray')
+# plt.title('Original Image'), plt.xticks([]), plt.yticks([])
+#
+# plt.subplot(1, 3, 2), plt.imshow(gray, cmap='gray')
+# plt.title('gray Image'), plt.xticks([]), plt.yticks([])
+#
+# plt.subplot(1, 3, 3), plt.imshow(thresh, cmap='gray')
+# plt.title('thresh Image'), plt.xticks([]), plt.yticks([])
+# plt.savefig('E:\\Deep Learning\\DeepLearning\\Opencv\\VR-contour-approximation.jpg')
 # plt.show()
 
 # 21.2.5 凸包
