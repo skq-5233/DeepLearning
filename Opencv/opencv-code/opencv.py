@@ -1347,13 +1347,47 @@
 # hull = cv2.convexHull(cnt)
 
 # 21.2.6 凸性检测
-# import cv2
-# img = cv2.imread('D:/software/DL information/Opencv/Opencv.png',0)
-# ret,thresh = cv2.threshold(img,127,255,0)
-# contours,hierarchy = cv2.findContours(thresh, 1, 2)
-# cnt = contours[0]
-# k = cv2.isContourConvex(cnt)
-# print(k)  # return False
+# 凸包检测和凸缺陷
+import cv2
+
+# 读取图像
+src1 = cv2.imread("D:\\DL information\\Opencv\\Pentagram.jpg")
+# print(src1.shape) # (264, 446, 3);
+# 转换为灰度图像
+gray = cv2.cvtColor(src1, cv2.COLOR_BGR2GRAY)
+# 二值化
+ret, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+# 获取结构元素
+k = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+# 开操作
+binary = cv2.morphologyEx(binary, cv2.MORPH_OPEN, k)
+# 轮廓发现
+contours, hierarchy = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+# 在原图上绘制轮廓，以方便和凸包对比，发现凸缺陷
+cv2.drawContours(src1, contours, -1, (0, 225, 0), 3)
+for c in range(len(contours)):
+    # 是否为凸包
+    ret = cv2.isContourConvex(contours[c])
+    # 凸缺陷
+    # 凸包检测，returnPoints为false的是返回与凸包点对应的轮廓上的点对应的index
+    hull = cv2.convexHull(contours[c], returnPoints=False)
+    defects = cv2.convexityDefects(contours[c], hull) # defects None???
+    print('defects', defects) # defects None???
+    for j in range(defects.shape[0]): # AttributeError: 'NoneType' object has no attribute 'shape';
+        s, e, f, d = defects[j, 0]
+        start = tuple(contours[c][s][0])
+        end = tuple(contours[c][e][0])
+        far = tuple(contours[c][f][0])
+        # 用红色连接凸缺陷的起始点和终止点
+        cv2.line(src1, start, end, (0, 0, 225), 2)
+        # 用蓝色最远点画一个圆圈
+        cv2.circle(src1, far, 5, (225, 0, 0), -1)
+
+# 显示
+cv2.imshow("result", src1)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
 
 # 21.2.7 边界矩形
 
