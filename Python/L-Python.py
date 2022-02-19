@@ -236,6 +236,7 @@
 # print(a.index(111)) # 1;
 # print(a.count('abc')) # 1;
 
+# 第二章 列表和元组（42）；
 # 列表(可改变数据类型)：添加(append:末尾添加元素,一次添加一个元素；exrend:末尾添加元素；)、插入(insert:)、修改；
 # a = ['qq', 111, 'abc', 'true', 'aas']
 # a.append('gods')  # append:末尾添加字符串,一次添加一个元素；
@@ -245,6 +246,16 @@
 # # a.extend(20)  # 报错，int无法迭代；
 # a.insert(0,'ewqr') # 在索引值0前面，添加元素；
 # print(a)
+
+#  序列还可包含其他序列，因此可创建一个由数据库中所有人员组成的列表：
+edward = ['Edward Gumby', 42]
+john = ['John Smith', 50]
+database = [edward, john]
+print(database) # [['Edward Gumby', 42], ['John Smith', 50]];
+
+
+
+
 
 # 删除（delete、pop 、remove，2022-0113）
 # a = ['qq', 111, 'abc', 'true', 'aas']
