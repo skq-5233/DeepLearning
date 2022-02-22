@@ -248,14 +248,10 @@
 # print(a)
 
 #  序列还可包含其他序列，因此可创建一个由数据库中所有人员组成的列表：
-edward = ['Edward Gumby', 42]
-john = ['John Smith', 50]
-database = [edward, john]
-print(database) # [['Edward Gumby', 42], ['John Smith', 50]];
-
-
-
-
+# edward = ['Edward Gumby', 42]
+# john = ['John Smith', 50]
+# database = [edward, john]
+# print(database) # [['Edward Gumby', 42], ['John Smith', 50]];
 
 # 删除（delete、pop 、remove，2022-0113）
 # a = ['qq', 111, 'abc', 'true', 'aas']
@@ -670,8 +666,8 @@ print(database) # [['Edward Gumby', 42], ['John Smith', 50]];
 
 
 # 4.2 创建和使用字典;字典由键及其相应的值组成，这种键值对称为项（item）。
-# phonebook = {'Alice': '2341', 'Beth': '9102', 'Cecil': '3258'}
-# print(phonebook['Cecil']) # 3258;
+    # phonebook = {'Alice': '2341', 'Beth': '9102', 'Cecil': '3258'}
+    # print(phonebook['Cecil']) # 3258;
 
 # 4.2.1 函数 dict；
 # items = [('name', 'Gumby'), ('age', 42)]
@@ -730,4 +726,58 @@ print(database) # [['Edward Gumby', 42], ['John Smith', 50]];
 # print("Cecil's phone number is {Cecil}.".format_map(phonebook))  # Cecil's phone number is 3258.;
 
 # 4.2.4 字典方法;
-# 1. clear;方法clear删除所有的字典项;
+# 1. clear--(方法clear删除所有的字典项，这种操作是就地执行的（就像list.sort一样），因此什么都不返回（返回None）。)
+phonebook = {'Alice': '2341', 'Beth': '9102', 'Cecil': '3258'}
+returned_value = d.clear()
+print(d) # {};
+
+# 2. copy(方法copy返回一个新字典，其包含的键值对与原来的字典相同（这个方法执行的是浅复制，因为值本身是原件，而非副本）。)
+x = {'username': 'admin', 'machines': ['foo', 'bar', 'baz']}
+y = x.copy()
+y['username'] = 'mlh'
+y['machines'].remove('bar')
+print(y) # {'username': 'mlh', 'machines': ['foo', 'baz']}；
+print(x) # {'username': 'admin', 'machines': ['foo', 'baz']};
+
+# 为了避免如果修改副本中的值（就地修改而不是替换），原件也将发生变化，一种办法是执行深复制；
+from copy import deepcopy
+d = {}
+d['names'] = ['Alfred', 'Bertrand']
+c = d.copy()
+dc = deepcopy(d)
+d['names'].append('Clive')
+print(c) # {'names': ['Alfred', 'Bertrand', 'Clive']};
+print(dc) # {'names': ['Alfred', 'Bertrand']};
+
+# 3. fromkeys(方法fromkeys创建一个新字典，其中包含指定的键，且每个键对应的值都是None。);
+{}.fromkeys(['name', 'age']) # {'age';: None, 'name': None};
+
+# 4. get(方法get为访问字典项提供了宽松的环境。);
+d['name'] = 'Eric'
+d.get('name') # 'Eric';
+
+# 5. items(方法items返回一个包含所有字典项的列表，其中每个元素都为(key, value)的形式。)
+d = {'title': 'Python Web Site', 'url': 'http://www.python.org', 'spam': 0}
+d.items() # dict_items([('url', 'http://www.python.org'), ('spam', 0), ('title', 'Python Web Site')])
+
+# 6. keys(方法keys返回一个字典视图，其中包含指定字典中的键。)
+# 7. pop(方法pop可用于获取与指定键相关联的值，并将该键值对从字典中删除。)
+d = {'x': 1, 'y': 2}
+print( d.pop('x')) # 1;
+print(d) # {'y': 2};
+# 8. popitem(方法popitem类似于list.pop，但list.pop弹出列表中的最后一个元素，而popitem随机地弹出一个字典项，因为字典项的顺序是不确定的);
+d = {'url': 'http://www.python.org', 'spam': 0, 'title': 'Python Web Site'}
+d.popitem() # ('url', 'http://www.python.org');
+print(d) # {'spam': 0, 'title': 'Python Web Site'}；
+
+# 9. setdefault（方法setdefault有点像get，因为它也获取与指定键相关联的值，但除此之外，setdefault还在字典不包含指定的键时，在字典中添加指定的键-值对。)
+d = {}
+d.setdefault('name', 'N/A') # {'name': 'N/A'};
+# 10. update（方法update使用一个字典中的项来更新另一个字典）；
+# 11. values（方法values返回一个由字典中的值组成的字典视图。不同于方法keys，方法values返回的视图可能包含重复的值。);
+d = {}
+d[1] = 1
+d[2] = 2
+d[3] = 3
+d[1] = 1
+print(d.values()) # dict_values([1, 2, 3, 1]);
